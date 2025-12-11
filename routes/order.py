@@ -35,25 +35,13 @@ def edit(order_id):
     if request.method == 'POST':
         order.user = request.form['user_id']
         order.product = request.form['product_id']
+
+        date_str = request.form['order_date']
+        order.order_date = datetime.strptime(date_str, "%Y-%m-%d")
+
         order.save()
         return redirect(url_for('order.list'))
 
     users = User.select()
     products = Product.select()
     return render_template('order_edit.html', order=order, users=users, products=products)
-
-@order_bp.route('/edit/<int:order_id>', methods=['GET', 'POST'])
-def edit(order_id):
-    order = Order.get_or_none(Order.id == order_id)
-    if not order:
-        return redirect(url_for('order.list'))
-
-    if request.method == 'POST':
-        order.user = request.form['user_id']
-        order.product = request.form['product_id']
-        
-        date_str = request.form['order_date']  
-        order.order_date = datetime.strptime(date_str, "%Y-%m-%d")
-
-        order.save()  
-        return redirect(url_for('order.list'))
