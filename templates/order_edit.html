@@ -22,9 +22,9 @@
             </select>
         </label><br>
         <label>製品: 
-            <select name="product_id" required>
-                {% for product in products %}
-                    <option value="{{ product.id }}" {% if order.product.id == product.id %}selected{% endif %}>{{ product.name }}</option>
+            <select name="place_id" required>
+                {% for place in places %}
+                    <option value="{{ place.id }}" {% if order.place.id == place.id %}selected{% endif %}>{{ place.name }}</option>
                 {% endfor %}
             </select>
         </label><br>
