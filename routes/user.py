@@ -1,41 +1,41 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import User
+from models import Traveler
 
 # Blueprintの作成
-user_bp = Blueprint('user', __name__, url_prefix='/users')
+traveler_bp = Blueprint('traveler', __name__, url_prefix='/travelers')
 
 
-@user_bp.route('/')
+@traveler_bp.route('/')
 def list():
     
     # データ取得
-    users = User.select()
+    travelers = Traveler.select()
 
-    return render_template('user_list.html', title='ユーザー一覧', items=users)
+    return render_template('traveler_list.html', title='ユーザー一覧', items=travelers)
 
 
-@user_bp.route('/add', methods=['GET', 'POST'])
+@traveler_bp.route('/add', methods=['GET', 'POST'])
 def add():
     
     if request.method == 'POST':
         name = request.form['name']
         age = request.form['age']
-        User.create(name=name, age=age)
-        return redirect(url_for('user.list'))
+        Traveler.create(name=name, age=age)
+        return redirect(url_for('traveler.list'))
     
-    return render_template('user_add.html')
+    return render_template('traveler_add.html')
 
 
-@user_bp.route('/edit/<int:user_id>', methods=['GET', 'POST'])
-def edit(user_id):
-    user = User.get_or_none(User.id == user_id)
-    if not user:
-        return redirect(url_for('user.list'))
+@traveler_bp.route('/edit/<int:traveler_id>', methods=['GET', 'POST'])
+def edit(traveler_id):
+    traveler = Traveler.get_or_none(Traveler.id == traveler_id)
+    if not traveler:
+        return redirect(url_for('traveler.list'))
 
     if request.method == 'POST':
-        user.name = request.form['name']
-        user.age = request.form['age']
-        user.save()
-        return redirect(url_for('user.list'))
+        traveler.name = request.form['name']
+        traveler.age = request.form['age']
+        traveler.save()
+        return redirect(url_for('traveler.list'))
 
-    return render_template('user_edit.html', user=user)
+    return render_template('traveler_edit.html', traveler=traveler)

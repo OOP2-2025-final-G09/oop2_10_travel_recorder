@@ -16,8 +16,8 @@
     <form action="{{ url_for('order.add') }}" method="post">
         <label>ユーザー: 
             <select name="user_id" required>
-                {% for user in users %}
-                    <option value="{{ user.id }}">{{ user.name }}</option>
+                {% for traveler in travelers %}
+                    <option value="{{ traveler.id }}">{{ traveler.name }}</option>
                 {% endfor %}
             </select>
         </label><br>

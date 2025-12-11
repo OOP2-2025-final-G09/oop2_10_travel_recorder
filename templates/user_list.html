@@ -22,11 +22,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for user in items %}
+            {% for traveler in items %}
             <tr>
-                <td><a href="{{ url_for('user.edit', user_id=user.id) }}">編集</a></td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.age }}</td>
+                <td><a href="{{ url_for('user.edit', traveler_id=user.id) }}">編集</a></td>
+                <td>{{ traveler.name }}</td>
+                <td>{{ traveler.age }}</td>
             </tr>
             {% endfor %}
         </tbody>
