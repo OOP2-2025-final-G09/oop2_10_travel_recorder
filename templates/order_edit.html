@@ -15,9 +15,9 @@
 
     <form action="{{ url_for('order.edit', order_id=order.id) }}" method="post">
         <label>旅行客: 
-            <select name="user_id" required>
-                {% for user in users %}
-                    <option value="{{ user.id }}" {% if order.user.id == user.id %}selected{% endif %}>{{ user.name }}</option>
+            <select name="traveler_id" required>
+                {% for traveler in travelers %}
+                    <option value="{{ traveler.id }}" {% if order.user.id == traveler.id %}selected{% endif %}>{{ traveler.name }}</option>
                 {% endfor %}
             </select>
         </label><br>

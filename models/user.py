@@ -1,7 +1,7 @@
 from peewee import Model, CharField, IntegerField
 from .db import db
 
-class User(Model):
+class Traveler(Model):
     name = CharField()
     age = IntegerField()
 
