@@ -28,12 +28,8 @@
                 {% endfor %}
             </select>
         </label><br>
-         <label>日付: 
-            <select name="data_id" required>
-                {% for product in products %}
-                    <option value="{{ product.id }}" {% if order.product.id == product.id %}selected{% endif %}>{{ product.name }}</option>
-                {% endfor %}
-            </select>
+        <label>日付:
+            <input type="date" name="order_date" value="{{ order.order_date.strftime('%Y-%m-%d') }}" required>
         </label><br>
         <button type="submit">保存</button>
     </form>
