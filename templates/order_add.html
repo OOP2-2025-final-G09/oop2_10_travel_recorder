@@ -12,27 +12,31 @@
         <li><a href="{{ url_for('order.list') }}">旅行記録一覧</a></li>
         <li>新規旅行記録</li>
     </ul>
-    
+
     <form action="{{ url_for('order.add') }}" method="post">
-        <label>ユーザー: 
-            <select name="user_id" required>
-                {% for user in users %}
-                    <option value="{{ user.id }}">{{ user.name }}</option>
-                {% endfor %}
-            </select>
+        <!-- ユーザー名 -->
+        <label>ユーザー名:
+            <input type="text" name="user_name" required>
         </label><br>
-        <label>会社名: 
-            <select name="product_id" required>
-                {% for product in products %}
-                    <option value="{{ product.id }}">{{ product.name }}</option>
-                {% endfor %}
-            </select>
+        <label>年齢:
+            <input type="number" name="user_age" min="0" required>
         </label><br>
-                <label>目的地: 
-        </label><br> 
-                <label>日付: 
-            </select>
-        </label><br>             
+
+        <!-- 会社名 -->
+        <label>会社名:
+            <input type="text" name="company_name" required>
+        </label><br>
+
+        <!-- 目的地 -->
+        <label>目的地:
+            <input type="text" name="place_name" required>
+        </label><br>
+
+        <!-- 日付 -->
+        <label>日付:
+            <input type="date" name="order_date" value="{{ current_date }}" required>
+        </label><br>
+
         <button type="submit">追加</button>
     </form>
 </body>
