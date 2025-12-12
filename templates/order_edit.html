@@ -14,24 +14,48 @@
     </ul>
 
     <form action="{{ url_for('order.edit', order_id=order.id) }}" method="post">
-        <!-- ユーザー名 -->
-        <label>ユーザー名:
-            <input type="text" name="user_name" value="{{ order.user.name }}" required>
+
+        <!-- ユーザー選択 -->
+        <label>ユーザー:
+            <select name="user_id">
+                {% for u in users %}
+                    <option value="{{ u.id }}" {% if u.id == order.user.id %}selected{% endif %}>
+                        {{ u.name }}（{{ u.age }}歳）
+                    </option>
+                {% endfor %}
+            </select>
         </label><br>
-        <label>年齢:
-            <input type="number" name="user_age" min="0" value="{{ order.user.age }}" required>
-        </label><br>
-      
-        <!-- 会社名 -->
-        <label>会社名:
-            <input type="text" name="company_name" value="{{ order.company.name }}" required>
-        </label><br>
-      
-        <!-- 目的地 -->
-        <label>目的地:
-            <input type="text" name="place_name" value="{{ order.place.name }}" required>
-        </label><br>
-      
+
+        <!-- 会社選択：DBに存在するものだけ -->
+        {% if companies %}
+            <label>会社名:
+                <select name="company_id">
+                    {% for c in companies %}
+                        <option value="{{ c.id }}" {% if c.id == order.company.id %}selected{% endif %}>
+                            {{ c.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label><br>
+        {% else %}
+            <p style="color:red;">会社が登録されていません。</p>
+        {% endif %}
+
+        <!-- 目的地選択：DBに存在するものだけ -->
+        {% if places %}
+            <label>目的地:
+                <select name="place_id">
+                    {% for p in places %}
+                        <option value="{{ p.id }}" {% if p.id == order.place.id %}selected{% endif %}>
+                            {{ p.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label><br>
+        {% else %}
+            <p style="color:red;">目的地が登録されていません。</p>
+        {% endif %}
+
         <!-- 日付 -->
         <label>日付:
             <input type="date" name="order_date" value="{{ order.order_date.strftime('%Y-%m-%d') }}" required>

@@ -17,7 +17,6 @@
         <thead>
             <tr>
                 <th>&nbsp;</th>
-
                 <th>旅行客</th>
                 <th>会社名</th>
                 <th>場所</th>
@@ -29,9 +28,9 @@
             <tr>
                 <td><a href="{{ url_for('order.edit', order_id=order.id) }}">編集</a></td>
                 <td>{{ order.user.name }}</td>
-                <td>{{ order.company.name }}</td>               
-                <td>{{ order.place.name }}</td> 
-                <td>{{ order.order_date }}</td> 
+                <td>{{ order.company.name }}</td>
+                <td>{{ order.place.name }}</td>
+                <td>{{ order.order_date.strftime('%Y-%m-%d') }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -4,6 +4,13 @@ from models import Company
 # Blueprintの作成
 company_bp = Blueprint('company', __name__, url_prefix='/companys')
 
+# 会社の固定選択肢
+COMPANY_OPTIONS = {
+    1: "JAL",
+    2: "ANA",
+    3: "Peach"
+}
+
 
 @company_bp.route('/')
 def list():
@@ -13,15 +20,16 @@ def list():
 
 @company_bp.route('/add', methods=['GET', 'POST'])
 def add():
-    
-    # POSTで送られてきたデータは登録
     if request.method == 'POST':
-        name = request.form['name']
-        #price = request.form['price']
-        #Company.create(name=name, price=price)
-        Company.create(name=name)
+        company_id = int(request.form['company_id'])
+
+        # 既に存在しない場合だけ作成（初期データ前提）
+        existing = Company.get_or_none(Company.id == company_id)
+        if not existing:
+            Company.create(id=company_id, name=COMPANY_OPTIONS[company_id])
+
         return redirect(url_for('company.list'))
-    
+
     return render_template('company_add.html')
 
 
@@ -32,9 +40,13 @@ def edit(company_id):
         return redirect(url_for('company.list'))
 
     if request.method == 'POST':
-        company.name = request.form['name']
-        #company.price = request.form['price']
+        new_id = int(request.form['company_id'])
+
+        # ID と 名前を更新
+        company.id = new_id
+        company.name = COMPANY_OPTIONS[new_id]
         company.save()
+
         return redirect(url_for('company.list'))
 
     return render_template('company_edit.html', company=company)

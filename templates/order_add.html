@@ -14,23 +14,41 @@
     </ul>
 
     <form action="{{ url_for('order.add') }}" method="post">
-        <!-- ユーザー名 -->
-        <label>ユーザー名:
-            <input type="text" name="user_name" required>
-        </label><br>
-        <label>年齢:
-            <input type="number" name="user_age" min="0" required>
+
+        <!-- ユーザー選択 -->
+        <label>ユーザー:
+            <select name="user_id" required>
+                {% for u in users %}
+                    <option value="{{ u.id }}">{{ u.name }}（{{ u.age }}歳）</option>
+                {% endfor %}
+            </select>
         </label><br>
 
-        <!-- 会社名 -->
-        <label>会社名:
-            <input type="text" name="company_name" required>
-        </label><br>
+        <!-- 会社選択：会社が存在しない場合は追加できない -->
+        {% if companies %}
+            <label>会社名:
+                <select name="company_id" required>
+                    {% for c in companies %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label><br>
+        {% else %}
+            <p style="color:red;">会社が登録されていません。</p>
+        {% endif %}
 
-        <!-- 目的地 -->
-        <label>目的地:
-            <input type="text" name="place_name" required>
-        </label><br>
+        <!-- 目的地選択 -->
+        {% if places %}
+            <label>目的地:
+                <select name="place_id" required>
+                    {% for p in places %}
+                        <option value="{{ p.id }}">{{ p.name }}</option>
+                    {% endfor %}
+                </select>
+            </label><br>
+        {% else %}
+            <p style="color:red;">目的地が登録されていません。</p>
+        {% endif %}
 
         <!-- 日付 -->
         <label>日付:
