@@ -7,16 +7,26 @@
 </head>
 <body>
     <h1>会社を編集</h1>
+
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
-        <li><a href="{{ url_for('company.list') }}">製品一覧</a></li>
+        <li><a href="{{ url_for('company.list') }}">会社一覧</a></li>
         <li>会社編集</li>
     </ul>
 
     <form action="{{ url_for('company.edit', company_id=company.id) }}" method="post">
-        <label>会社名: <input type="text" name="name" value="{{ company.name }}" required></label><br>
+
+        <p><strong>現在のID:</strong> {{ company.id }}</p>
+
+        <label>会社:
+            <select name="company_id" required>
+                <option value="1" {% if company.id == 1 %}selected{% endif %}>JAL</option>
+                <option value="2" {% if company.id == 2 %}selected{% endif %}>ANA</option>
+                <option value="3" {% if company.id == 3 %}selected{% endif %}>Peach</option>
+            </select>
+        </label><br>
+
         <button type="submit">保存</button>
     </form>
 </body>
 </html>
-

@@ -15,35 +15,39 @@ def list():
 @order_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        # フォームから入力値を取得
-        user_name = request.form['user_name'].strip()
-        user_age = int(request.form['user_age'].strip())
-        place_name = request.form['place_name'].strip()
-        company_name = request.form['company_name'].strip()
+        user_id = int(request.form['user_id'])
+        place_id = int(request.form['place_id'])
+        company_id = int(request.form['company_id'])
         order_date = datetime.strptime(request.form['order_date'], "%Y-%m-%d")
 
-        # ユーザー取得 or 作成
-        user, created = User.get_or_create(
-            name=user_name,
-            defaults={'age': user_age}
-        )
-        if not created:
-            user.age = user_age
-            user.save()
+        # --- ここを追加：存在チェック ---
+        if not Company.get_or_none(Company.id == company_id):
+            return "会社が存在しません。", 400
+        if not Place.get_or_none(Place.id == place_id):
+            return "目的地が存在しません。", 400
+        # ----------------------------------
 
-        # Place取得 or 作成
-        place, _ = Place.get_or_create(name=place_name)
-
-        # Company取得 or 作成
-        company, _ = Company.get_or_create(name=company_name)
-
-        # Order作成
-        Order.create(user=user, place=place, company=company, order_date=order_date)
+        Order.create(
+            user=user_id,
+            place=place_id,
+            company=company_id,
+            order_date=order_date
+    )
 
         return redirect(url_for('order.list'))
 
-    # GET時は今日の日付を初期値として渡す
-    return render_template('order_add.html', current_date=date.today())
+    # ForeignKey の候補一覧
+    users = User.select()
+    places = Place.select()
+    companies = Company.select()
+
+    return render_template(
+        'order_add.html',
+        users=users,
+        places=places,
+        companies=companies,
+        current_date=date.today()
+    )
 
 
 @order_bp.route('/edit/<int:order_id>', methods=['GET', 'POST'])
@@ -53,37 +57,35 @@ def edit(order_id):
         return redirect(url_for('order.list'))
 
     if request.method == 'POST':
-        # フォームから入力値を取得
-        user_name = request.form['user_name'].strip()
-        user_age = int(request.form['user_age'].strip())
-        place_name = request.form['place_name'].strip()
-        company_name = request.form['company_name'].strip()
-        order_date_str = request.form['order_date'].strip()
+        user_id = int(request.form['user_id'])
+        place_id = int(request.form['place_id'])
+        company_id = int(request.form['company_id'])
+        order_date = datetime.strptime(request.form['order_date'], "%Y-%m-%d")
 
-        # ForeignKey用オブジェクト取得 or 作成
-        user, created = User.get_or_create(
-            name=user_name,
-            defaults={'age': user_age}
-        )
-        if not created:
-            user.age = user_age
-            user.save()
+        # --- ここを追加：存在チェック ---
+        if not Company.get_or_none(Company.id == company_id):
+            return "会社が存在しません。", 400
+        if not Place.get_or_none(Place.id == place_id):
+            return "目的地が存在しません。", 400
+        # ----------------------------------
 
-        place, _ = Place.get_or_create(name=place_name)
-        company, _ = Company.get_or_create(name=company_name)
-
-        # Orderを更新
-        order.user = user
-        order.place = place
-        order.company = company
-        order.order_date = datetime.strptime(order_date_str, "%Y-%m-%d")
+        order.user = user_id
+        order.place = place_id
+        order.company = company_id
+        order.order_date = order_date
         order.save()
 
         return redirect(url_for('order.list'))
 
-    # GET時はフォーム表示
+    # 外部キー用の候補一覧を渡す
+    users = User.select()
+    places = Place.select()
+    companies = Company.select()
+
     return render_template(
         'order_edit.html',
-        order=order
+        order=order,
+        users=users,
+        places=places,
+        companies=companies
     )
-

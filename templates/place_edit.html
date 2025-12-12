@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>目的地を編集</h1>
+
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
         <li><a href="{{ url_for('place.list') }}">目的地一覧</a></li>
@@ -14,8 +15,17 @@
     </ul>
 
     <form action="{{ url_for('place.edit', place_id=place.id) }}" method="post">
-        <label>目的地名: <input type="text" name="name" value="{{ place.name }}" required></label><br>
-        <!-- <label>価格: <input type="number" step="1" name="price" value="{{ place.price }}" required></label><br> -->
+
+        <p><strong>現在のID:</strong> {{ place.id }}</p>
+
+        <label>目的地:
+            <select name="place_id" required>
+                <option value="1" {% if place.id == 1 %}selected{% endif %}>沖縄</option>
+                <option value="2" {% if place.id == 2 %}selected{% endif %}>名古屋</option>
+                <option value="3" {% if place.id == 3 %}selected{% endif %}>北海道</option>
+            </select>
+        </label><br>
+
         <button type="submit">保存</button>
     </form>
 </body>

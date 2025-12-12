@@ -17,6 +17,7 @@
         <thead>
             <tr>
                 <th>&nbsp;</th>
+                <th>ID</th>
                 <th>目的地名</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
             {% for place in items %}
             <tr>
                 <td><a href="{{ url_for('place.edit', place_id=place.id) }}">編集</a></td>
+                <td>{{ place.id }}</td>
                 <td>{{ place.name }}</td>
             </tr>
             {% endfor %}
