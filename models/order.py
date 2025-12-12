@@ -4,6 +4,7 @@ from .user import User
 from .place import Place
 from .company import Company  # Companyモデルをインポート
 
+
 class Order(Model):
     user = ForeignKeyField(User, backref='orders')
     place = ForeignKeyField(Place, backref='orders')

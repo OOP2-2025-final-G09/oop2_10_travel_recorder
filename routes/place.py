@@ -13,14 +13,13 @@ def list():
 
 @place_bp.route('/add', methods=['GET', 'POST'])
 def add():
-
-    # 選択肢
     PLACE_OPTIONS = {
         1: "沖縄",
         2: "名古屋",
         3: "北海道"
     }
 
+    # POSTで送られてきたデータは登録
     if request.method == 'POST':
         place_id = int(request.form['place_id'])
 
@@ -30,7 +29,7 @@ def add():
             Place.create(id=place_id, name=PLACE_OPTIONS[place_id])
 
         return redirect(url_for('place.list'))
-
+      
     return render_template('place_add.html')
 
 

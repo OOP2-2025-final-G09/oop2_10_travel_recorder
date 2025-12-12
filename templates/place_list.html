@@ -7,14 +7,12 @@
 </head>
 <body>
     <h1>{{ title }}</h1>
-
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
         <li><a href="{{ url_for('place.list') }}">目的地一覧</a></li>
     </ul>
 
     <a href="{{ url_for('place.add') }}">新規目的地追加</a>
-
     <table>
         <thead>
             <tr>
@@ -23,7 +21,6 @@
                 <th>目的地名</th>
             </tr>
         </thead>
-
         <tbody>
             {% for place in items %}
             <tr>
