@@ -29,9 +29,9 @@
             <tr>
                 <td><a href="{{ url_for('order.edit', order_id=order.id) }}">編集</a></td>
                 <td>{{ order.user.name }}</td>
-                <td>{{ order.product.name }}</td>
-                <td>{{ order.order_date }}</td>
-                <td></td>
+                <td>{{ order.company.name }}</td>               
+                <td>{{ order.place.name }}</td> 
+                <td>{{ order.order_date }}</td> 
             </tr>
             {% endfor %}
         </tbody>
