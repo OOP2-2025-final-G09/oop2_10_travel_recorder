@@ -38,4 +38,8 @@ def edit(traveler_id):
         traveler.save()
         return redirect(url_for('traveler.list'))
 
+
     return render_template('user_edit.html', traveler=traveler)
+
+#テスト
+

@@ -14,6 +14,7 @@
     </ul>
 
     <form action="{{ url_for('order.edit', order_id=order.id) }}" method="post">
+
         <label>旅行客: 
             <select name="traveler_id" required>
                 {% for traveler in travelers %}
@@ -25,12 +26,46 @@
             <select name="product_id" required>
                 {% for product in products %}
                     <option value="{{ product.id }}" {% if order.product.id == product.id %}selected{% endif %}>{{ product.name }}</option>
+
                 {% endfor %}
             </select>
         </label><br>
+
+        <!-- 会社選択：DBに存在するものだけ -->
+        {% if companies %}
+            <label>会社名:
+                <select name="company_id">
+                    {% for c in companies %}
+                        <option value="{{ c.id }}" {% if c.id == order.company.id %}selected{% endif %}>
+                            {{ c.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label><br>
+        {% else %}
+            <p style="color:red;">会社が登録されていません。</p>
+        {% endif %}
+
+        <!-- 目的地選択：DBに存在するものだけ -->
+        {% if places %}
+            <label>目的地:
+                <select name="place_id">
+                    {% for p in places %}
+                        <option value="{{ p.id }}" {% if p.id == order.place.id %}selected{% endif %}>
+                            {{ p.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label><br>
+        {% else %}
+            <p style="color:red;">目的地が登録されていません。</p>
+        {% endif %}
+
+        <!-- 日付 -->
         <label>日付:
             <input type="date" name="order_date" value="{{ order.order_date.strftime('%Y-%m-%d') }}" required>
         </label><br>
+
         <button type="submit">保存</button>
     </form>
 </body>
