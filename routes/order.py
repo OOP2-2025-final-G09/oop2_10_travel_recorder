@@ -73,7 +73,7 @@ def edit(order_id):
             return "目的地が存在しません。", 400
         # ----------------------------------
 
-        order.user = user_id
+        order.traveler= traveler_id
         order.place = place_id
         order.company = company_id
         order.order_date = order_date
