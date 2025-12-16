@@ -11,7 +11,7 @@ def list():
     # データ取得
     travelers = Traveler.select()
 
-    return render_template('traveler_list.html', title='ユーザー一覧', items=travelers)
+    return render_template('user_list.html' , title='ユーザー一覧', items=travelers)
 
 
 @traveler_bp.route('/add', methods=['GET', 'POST'])
@@ -23,7 +23,7 @@ def add():
         Traveler.create(name=name, age=age)
         return redirect(url_for('traveler.list'))
     
-    return render_template('traveler_add.html')
+    return render_template('user_add.html')
 
 
 @traveler_bp.route('/edit/<int:traveler_id>', methods=['GET', 'POST'])
@@ -38,4 +38,4 @@ def edit(traveler_id):
         traveler.save()
         return redirect(url_for('traveler.list'))
 
-    return render_template('traveler_edit.html', traveler=traveler)
+    return render_template('user_edit.html', traveler=traveler)
