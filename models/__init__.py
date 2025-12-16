@@ -11,7 +11,6 @@ from .place import Place
 MODELS = [
     Traveler,
     Place,
- main
     Product,
     Company,
     Place,
