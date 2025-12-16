@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import Order, User, Place, Company
+from models import Order, Traveler, Place, Company
 from datetime import datetime, date
+
 
 # Blueprintの作成
 order_bp = Blueprint('order', __name__, url_prefix='/orders')
@@ -15,7 +16,8 @@ def list():
 @order_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        user_id = int(request.form['user_id'])
+
+        traveler_id = int(request.form['traveler_id'])
         place_id = int(request.form['place_id'])
         company_id = int(request.form['company_id'])
         order_date = datetime.strptime(request.form['order_date'], "%Y-%m-%d")
@@ -28,7 +30,7 @@ def add():
         # ----------------------------------
 
         Order.create(
-            user=user_id,
+            traveler=traveler_id,
             place=place_id,
             company=company_id,
             order_date=order_date
@@ -37,17 +39,18 @@ def add():
         return redirect(url_for('order.list'))
 
     # ForeignKey の候補一覧
-    users = User.select()
+    travelers = Traveler.select()
     places = Place.select()
     companies = Company.select()
 
     return render_template(
         'order_add.html',
-        users=users,
+        travelers=travelers,
         places=places,
         companies=companies,
         current_date=date.today()
     )
+
 
 
 @order_bp.route('/edit/<int:order_id>', methods=['GET', 'POST'])
@@ -57,10 +60,11 @@ def edit(order_id):
         return redirect(url_for('order.list'))
 
     if request.method == 'POST':
-        user_id = int(request.form['user_id'])
+        traveler_id = int(request.form['traveler_id'])
         place_id = int(request.form['place_id'])
         company_id = int(request.form['company_id'])
         order_date = datetime.strptime(request.form['order_date'], "%Y-%m-%d")
+
 
         # --- ここを追加：存在チェック ---
         if not Company.get_or_none(Company.id == company_id):
@@ -77,15 +81,16 @@ def edit(order_id):
 
         return redirect(url_for('order.list'))
 
+
     # 外部キー用の候補一覧を渡す
-    users = User.select()
+    travelers = Traveler.select()
     places = Place.select()
     companies = Company.select()
 
     return render_template(
         'order_edit.html',
         order=order,
-        users=users,
+        travelers=travelers,
         places=places,
         companies=companies
     )

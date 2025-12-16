@@ -1,7 +1,6 @@
 from peewee import SqliteDatabase
 from .db import db
-from .user import User
-
+from .user import Traveler
 from .place import Place
 from .product import Product
 from .company import Company
@@ -10,8 +9,9 @@ from .place import Place
 
 # モデルのリストを定義しておくと、後でまとめて登録しやすくなります
 MODELS = [
-    User,
+    Traveler,
     Place,
+ main
     Product,
     Company,
     Place,

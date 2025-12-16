@@ -18,8 +18,8 @@
         <!-- ユーザー選択 -->
         <label>ユーザー:
             <select name="user_id" required>
-                {% for u in users %}
-                    <option value="{{ u.id }}">{{ u.name }}（{{ u.age }}歳）</option>
+            {% for traveler in travelers %}
+                    <option value="{{ traveler.id }}">{{ traveler.name }}</option>
                 {% endfor %}
             </select>
         </label><br>
