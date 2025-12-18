@@ -27,7 +27,7 @@
             {% for order in items %}
             <tr>
                 <td><a href="{{ url_for('order.edit', order_id=order.id) }}">編集</a></td>
-                <td>{{ order.user.name }}</td>
+                <td>{{ order.traveler.name }}</td>
                 <td>{{ order.company.name }}</td>
                 <td>{{ order.place.name }}</td>
                 <td>{{ order.order_date.strftime('%Y-%m-%d') }}</td>

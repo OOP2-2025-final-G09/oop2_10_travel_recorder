@@ -18,7 +18,7 @@
         <label>旅行客: 
             <select name="traveler_id" required>
                 {% for traveler in travelers %}
-                    <option value="{{ traveler.id }}" {% if order.user.id == traveler.id %}selected{% endif %}>{{ traveler.name }}</option>
+                    <option value="{{ traveler.id }}" {% if order.traveler.id == traveler.id %}selected{% endif %}>{{ traveler.name }}</option>
                 {% endfor %}
             </select>
         </label><br>
