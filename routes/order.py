@@ -13,44 +13,50 @@ def list():
     return render_template('order_list.html', title='注文一覧', items=orders)
 
 
+from flask import request, redirect, url_for, render_template
+from models import Order
+
 @order_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-
         traveler_id = int(request.form['traveler_id'])
-        place_id = int(request.form['place_id'])
         company_id = int(request.form['company_id'])
-        order_date = datetime.strptime(request.form['order_date'], "%Y-%m-%d")
+        place_id = int(request.form['place_id'])
+        order_date = request.form['order_date']
 
-        # --- ここを追加：存在チェック ---
-        if not Company.get_or_none(Company.id == company_id):
-            return "会社が存在しません。", 400
-        if not Place.get_or_none(Place.id == place_id):
-            return "目的地が存在しません。", 400
-        # ----------------------------------
+        exists = Order.select().where(
+            (Order.traveler == traveler_id) &
+            (Order.company == company_id) &
+            (Order.place == place_id) &
+            (Order.order_date == order_date)
+        ).exists()
+
+        if exists:
+            return render_template(
+                'order_add.html',
+                error='同じユーザー・会社・目的地・日付の旅行記録は既に登録されています。',
+                travelers=Traveler.select(),
+                companies=Company.select(),
+                places=Place.select(),
+                current_date=order_date
+            )
 
         Order.create(
             traveler=traveler_id,
-            place=place_id,
             company=company_id,
+            place=place_id,
             order_date=order_date
-    )
+        )
 
         return redirect(url_for('order.list'))
 
-    # ForeignKey の候補一覧
-    travelers = Traveler.select()
-    places = Place.select()
-    companies = Company.select()
-
     return render_template(
         'order_add.html',
-        travelers=travelers,
-        places=places,
-        companies=companies,
-        current_date=date.today()
+        travelers=Traveler.select(),
+        companies=Company.select(),
+        places=Place.select(),
+        current_date=date.today().isoformat()
     )
-
 
 
 @order_bp.route('/edit/<int:order_id>', methods=['GET', 'POST'])
@@ -61,36 +67,40 @@ def edit(order_id):
 
     if request.method == 'POST':
         traveler_id = int(request.form['traveler_id'])
-        place_id = int(request.form['place_id'])
         company_id = int(request.form['company_id'])
-        order_date = datetime.strptime(request.form['order_date'], "%Y-%m-%d")
+        place_id = int(request.form['place_id'])
+        order_date = request.form['order_date']
 
+        exists = Order.select().where(
+            (Order.id != order_id) &  
+            (Order.traveler == traveler_id) &
+            (Order.company == company_id) &
+            (Order.place == place_id) &
+            (Order.order_date == order_date)
+        ).exists()
 
-        # --- ここを追加：存在チェック ---
-        if not Company.get_or_none(Company.id == company_id):
-            return "会社が存在しません。", 400
-        if not Place.get_or_none(Place.id == place_id):
-            return "目的地が存在しません。", 400
-        # ----------------------------------
+        if exists:
+            return render_template(
+                'order_edit.html',
+                error='同じユーザー・会社・目的地・日付の旅行記録は既に存在します。',
+                order=order,
+                travelers=Traveler.select(),
+                companies=Company.select(),
+                places=Place.select()
+            )
 
-        order.traveler= traveler_id
-        order.place = place_id
+        order.traveler = traveler_id
         order.company = company_id
+        order.place = place_id
         order.order_date = order_date
         order.save()
 
         return redirect(url_for('order.list'))
 
-
-    # 外部キー用の候補一覧を渡す
-    travelers = Traveler.select()
-    places = Place.select()
-    companies = Company.select()
-
     return render_template(
         'order_edit.html',
         order=order,
-        travelers=travelers,
-        places=places,
-        companies=companies
+        travelers=Traveler.select(),
+        companies=Company.select(),
+        places=Place.select()
     )
