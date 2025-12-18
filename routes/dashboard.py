@@ -37,14 +37,24 @@ def popular_places():
     place_dist = dict(sorted(place_count.items()))
     return jsonify(place_dist)
 
-
-
 @dashboard_bp.route('/busy_dates')
 def busy_dates():
-    """
-    利用が多かった日: 予約が集中している日付トップ10を返す
-    TODO: Orderテーブルから日付別の集計を実装
-    例: [{'date': '2025/1/4', 'count': 2}, {'date': '2025/1/15', 'count': 1}]
-    """
-    # TODO: 実装する
-    return jsonify([])
+    date_count = {}
+
+    for order in Order.select():
+        if order.order_date is None:
+            continue
+
+        date_str = order.order_date.strftime('%Y/%m/%d')
+
+        date_count[date_str] = date_count.get(date_str, 0) + 1
+
+    sorted_dates = dict(
+        sorted(
+            date_count.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )[:10]
+    )
+
+    return jsonify(sorted_dates)
