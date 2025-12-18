@@ -18,11 +18,21 @@
     </ul>
 
     <!-- ダッシュボード: 利用年齢層（とりあえず仮で利用者年齢層のみ書きました。B担当の人がやるとこ） -->
+    <!-- 利用年齢層 -->
     <div class="dashboard-card">
         <h2>利用年齢層</h2>
         <p class="chart-subtitle">ユーザーの年齢分布</p>
         <div class="chart-wrapper">
             <canvas id="ageChart"></canvas>
+        </div>
+    </div>
+
+    <!-- 人気の旅行先（円グラフ） -->
+    <div class="dashboard-card">
+        <h2>人気の旅行先</h2>
+        <p class="chart-subtitle">予約数が多い目的地</p>
+        <div class="chart-wrapper">
+            <canvas id="placeChart"></canvas>
         </div>
     </div>
 </body>
