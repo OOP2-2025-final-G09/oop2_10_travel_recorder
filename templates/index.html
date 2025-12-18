@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>注文管理システム</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
-    <!-- TODO 担当B: Chart.jsのCDN (<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>) を追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>注文管理システム</h1>
@@ -18,16 +18,24 @@
 
     </ul>
 
-    <!-- TODO 担当B: ダッシュボードのグラフエリアを追加 -->
-    <!--
-        3つのグラフを表示するための<canvas>要素を追加:
-        1. 利用年齢層 (棒グラフ) - id="ageChart"
-        2. 人気の旅行先 (円グラフ) - id="placeChart"
-        3. 利用が多かった日 (棒グラフ) - id="dateChart"
+    <div class="dashboard">
+        <div class="card">
+            <h2>利用年齢層</h2>
+            <canvas id="ageChart"></canvas>
+        </div>
+    
+        <div class="card">
+            <h2>人気の旅行先</h2>
+            <canvas id="placeChart"></canvas>
+        </div>
+    
+        <div class="card">
+            <h2>利用が多かった日</h2>
+            <canvas id="dateChart"></canvas>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 
-        各グラフはカードレイアウトで配置し、CSSでスタイリング
-    -->
-
-    <!-- TODO 担当B: dashboard.jsを読み込み (<script src="{{ url_for('static', filename='dashboard.js') }}"></script>) -->
 </body>
 </html>
