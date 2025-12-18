@@ -7,7 +7,7 @@ from .company import Company  # Companyモデルをインポート
 
 
 class Order(Model):
-    Traveler = ForeignKeyField(Traveler, backref='orders')
+    traveler = ForeignKeyField(Traveler, backref='orders')
     place = ForeignKeyField(Place, backref='orders')
     company = ForeignKeyField(Company, backref='orders')  # 追加
 
