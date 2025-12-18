@@ -7,35 +7,40 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>注文管理システム</h1>
-    <ul>
+    <div class="layout">
 
-      <li><a href="{{ url_for('traveler.list') }}">旅行者</a></li>
-      <li><a href="{{ url_for('product.list') }}">製品</a></li>
-      <li><a href="{{ url_for('place.list') }}">目的地</a></li>
-      <li><a href="{{ url_for('company.list') }}">会社</a></li>
-      <li><a href="{{ url_for('order.list') }}">旅行</a></li>
+        <aside class="sidebar">
+            <h1>注文管理システム</h1>
+            <ul class="menu">
+                <li><a href="{{ url_for('traveler.list') }}">Traveler</a></li>
+                <!-- <li><a href="{{ url_for('product.list') }}">製品</a></li> -->
+                <li><a href="{{ url_for('place.list') }}">Place</a></li>
+                <li><a href="{{ url_for('company.list') }}">Company</a></li>
+                <li><a href="{{ url_for('order.list') }}">Travel</a></li>
+            </ul>
+        </aside>
 
-    </ul>
+        <main class="dashboard">
+            <div class="card">
+                <h2>利用年齢層</h2>
+                <canvas id="ageChart"></canvas>
+            </div>
 
-    <div class="dashboard">
-        <div class="card">
-            <h2>利用年齢層</h2>
-            <canvas id="ageChart"></canvas>
-        </div>
-    
-        <div class="card">
-            <h2>人気の旅行先</h2>
-            <canvas id="placeChart"></canvas>
-        </div>
-    
-        <div class="card">
-            <h2>利用が多かった日</h2>
-            <canvas id="dateChart"></canvas>
-        </div>
+            <div class="card">
+                <h2>人気の旅行先</h2>
+                <canvas id="placeChart"></canvas>
+            </div>
+
+            <div class="card">
+                <h2>利用が多かった日</h2>
+                <canvas id="dateChart"></canvas>
+            </div>
+        </main>
+
     </div>
-    
-    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 </body>
+
 </html>
+
