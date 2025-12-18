@@ -24,13 +24,19 @@ def age_distribution():
 
 @dashboard_bp.route('/popular_places')
 def popular_places():
-    """
-    人気の旅行先: 予約数が多い目的地を返す
-    TODO: Orderテーブルから目的地別の集計を実装
-    例: {'沖縄': 67, '北海道': 33}
-    """
-    # TODO: 実装する
-    return jsonify({})
+    place_count = {}
+
+    for order in Order.select():
+        place = order.place
+        if place is None:
+            continue
+
+        name = place.name
+        place_count[name] = place_count.get(name, 0) + 1
+
+    place_dist = dict(sorted(place_count.items()))
+    return jsonify(place_dist)
+
 
 
 @dashboard_bp.route('/busy_dates')
