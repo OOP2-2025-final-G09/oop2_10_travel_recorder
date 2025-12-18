@@ -8,18 +8,23 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 </head>
-<body>
-    <h1>旅行記録管理システム</h1>
-    <ul>
-      <li><a href="{{ url_for('traveler.list') }}">旅行者</a></li>
-      <li><a href="{{ url_for('place.list') }}">目的地</a></li>
-      <li><a href="{{ url_for('company.list') }}">会社</a></li>
-      <li><a href="{{ url_for('order.list') }}">旅行</a></li>
-    </ul>
+<body class="dashboard">
+    <nav>
+        <h1>旅行記録管理<br>システム</h1>
+        <ul>
+          <li><a href="{{ url_for('traveler.list') }}">旅行者</a></li>
+          <li><a href="{{ url_for('place.list') }}">目的地</a></li>
+          <li><a href="{{ url_for('company.list') }}">会社</a></li>
+          <li><a href="{{ url_for('order.list') }}">旅行</a></li>
+        </ul>
+    </nav>
 
-    <!-- ダッシュボード: 利用年齢層（とりあえず仮で利用者年齢層のみ書きました。B担当の人がやるとこ） -->
-    <!-- 利用年齢層 -->
-    <div class="dashboard-card">
+    <main>
+
+        <div class="dashboard-grid">
+            <!-- ダッシュボード: 利用年齢層（とりあえず仮で利用者年齢層のみ書きました。B担当の人がやるとこ） -->
+            <!-- 利用年齢層 -->
+            <div class="dashboard-card">
         <h2>利用年齢層</h2>
         <p class="chart-subtitle">ユーザーの年齢分布</p>
         <div class="chart-wrapper">
@@ -27,23 +32,25 @@
         </div>
     </div>
 
-    <!-- 人気の旅行先（円グラフ） -->
-    <div class="dashboard-card">
-        <h2>人気の旅行先</h2>
-        <p class="chart-subtitle">予約数が多い目的地</p>
-        <div class="chart-wrapper">
-            <canvas id="placeChart"></canvas>
+            <!-- 人気の旅行先（円グラフ） -->
+            <div class="dashboard-card">
+                <h2>人気の旅行先</h2>
+                <p class="chart-subtitle">予約数が多い目的地</p>
+                <div class="chart-wrapper">
+                    <canvas id="placeChart"></canvas>
+                </div>
+            </div>
         </div>
-    </div>
 
         <!-- 利用が多かった日（棒グラフ） -->
-    <div class="dashboard-card">
-        <h2>利用が多かった日</h2>
-        <p class="chart-subtitle">予約数が多い日付トップ10</p>
-        <div class="chart-wrapper">
-            <canvas id="dateChart"></canvas>
+        <div class="dashboard-card full-width">
+            <h2>利用が多かった日</h2>
+            <p class="chart-subtitle">予約数が多い日付トップ10</p>
+            <div class="chart-wrapper">
+                <canvas id="dateChart"></canvas>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 
 </html>
