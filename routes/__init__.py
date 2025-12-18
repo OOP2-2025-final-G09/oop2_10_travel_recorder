@@ -13,5 +13,4 @@ blueprints = [
   product_bp,
   company_bp,
   order_bp,
-  place_bp
 ]

@@ -14,7 +14,6 @@ MODELS = [
     Place,
     Product,
     Company,
-    Place,
     Order,
 ]
 
