@@ -17,7 +17,7 @@
 
         <!-- ユーザー選択 -->
         <label>ユーザー:
-            <select name="user_id" required>
+            <select name="traveler_id" required>
             {% for traveler in travelers %}
                     <option value="{{ traveler.id }}">{{ traveler.name }}</option>
                 {% endfor %}
