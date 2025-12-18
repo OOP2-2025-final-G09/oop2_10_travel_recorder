@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from models import Traveler
 
 # Blueprintの作成
@@ -7,22 +7,23 @@ traveler_bp = Blueprint('traveler', __name__, url_prefix='/travelers')
 
 @traveler_bp.route('/')
 def list():
-    
-    # データ取得
     travelers = Traveler.select()
-
-    return render_template('user_list.html' , title='ユーザー一覧', items=travelers)
+    return render_template('user_list.html', title='ユーザー一覧', items=travelers)
 
 
 @traveler_bp.route('/add', methods=['GET', 'POST'])
 def add():
-    
     if request.method == 'POST':
         name = request.form['name']
-        age = request.form['age']
+        age = int(request.form.get('age', -1))
+
+        # 🔽 年齢チェック
+        if not (0 <= age <= 100):
+            abort(400, '年齢は0〜100の範囲で入力してください')
+
         Traveler.create(name=name, age=age)
         return redirect(url_for('traveler.list'))
-    
+
     return render_template('user_add.html')
 
 
@@ -34,12 +35,14 @@ def edit(traveler_id):
 
     if request.method == 'POST':
         traveler.name = request.form['name']
-        traveler.age = request.form['age']
+        age = int(request.form.get('age', -1))
+
+        # 🔽 年齢チェック
+        if not (0 <= age <= 100):
+            abort(400, '年齢は0〜100の範囲で入力してください')
+
+        traveler.age = age
         traveler.save()
         return redirect(url_for('traveler.list'))
 
-
     return render_template('user_edit.html', traveler=traveler)
-
-#テスト
-
