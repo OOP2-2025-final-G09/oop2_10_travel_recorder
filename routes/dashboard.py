@@ -8,14 +8,19 @@ dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/api')
 
 @dashboard_bp.route('/age_distribution')
 def age_distribution():
-    """
-    利用年齢層: ユーザーの年齢分布を返す
-    TODO: Travelerテーブルから年齢別の集計を実装
-    例: {'20代': 2, '30代': 1}
-    """
-    # TODO: 実装する
-    return jsonify({})
+    age_dist = {}
 
+    for traveler in Traveler.select():
+        if traveler.age is None:
+            continue
+
+        decade = (traveler.age // 10) * 10
+        age_dist[decade] = age_dist.get(decade, 0) + 1
+
+    # キーでソートしてから jsonify
+    sorted_dist = dict(sorted(age_dist.items()))
+
+    return jsonify(sorted_dist)
 
 @dashboard_bp.route('/popular_places')
 def popular_places():
