@@ -14,8 +14,28 @@
     </ul>
 
     <form action="{{ url_for('traveler.edit', traveler_id=traveler.id) }}" method="post">
-        <label>名前: <input type="text" name="name" value="{{ traveler.name }}" required></label><br>
-        <label>年齢: <input type="number" name="age" value="{{ traveler.age }}" required></label><br>
+        <label>
+            名前:
+            <input
+                type="text"
+                name="name"
+                value="{{ traveler.name }}"
+                required
+            >
+        </label><br>
+
+        <label>
+            年齢:
+            <input
+                type="number"
+                name="age"
+                value="{{ traveler.age }}"
+                min="0"
+                max="100"
+                required
+            >
+        </label><br>
+
         <button type="submit">保存</button>
     </form>
 </body>
