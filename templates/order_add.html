@@ -14,7 +14,9 @@
     </ul>
 
     <form action="{{ url_for('order.add') }}" method="post">
-
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+        {% endif %}
         <!-- ユーザー選択 -->
         <label>ユーザー:
             <select name="traveler_id" required>

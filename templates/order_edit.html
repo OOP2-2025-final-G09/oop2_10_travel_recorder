@@ -14,7 +14,9 @@
     </ul>
 
     <form action="{{ url_for('order.edit', order_id=order.id) }}" method="post">
-
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+        {% endif %}
         <label>旅行客:
             <select name="traveler_id" required>
                 {% for traveler in travelers %}
