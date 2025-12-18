@@ -2,15 +2,15 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ユーザー編集</title>
+    <title>旅行者編集</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
-    <h1>ユーザーを編集</h1>
+    <h1>旅行者を編集</h1>
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
         <li><a href="{{ url_for('traveler.list') }}">旅行者一覧</a></li>
-        <li>ユーザー編集</li>
+        <li>旅行者編集</li>
     </ul>
 
     <form action="{{ url_for('traveler.edit', traveler_id=traveler.id) }}" method="post">
